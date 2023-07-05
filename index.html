@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
     <head>
         <script type="module" src="apijs.js"></script>
@@ -9,4 +9,45 @@
             <div class="test"></div>
         </main>
     </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module" src="apijs.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="carousel">
+    <ul id="bestMovies">
+    </ul>
+    <div class="prev">&#10094;</div>
+    <div class="next">&#10095;</div>
+  </div>
+
+  <!-- <script>
+    var carousel = document.querySelector('.carousel');
+    var prevButton = carousel.querySelector('.prev');
+    var nextButton = carousel.querySelector('.next');
+    var imageList = carousel.querySelector('ul');
+    var images = carousel.querySelectorAll('li');
+
+    var imageWidth = images[0].offsetWidth;
+    var currentIndex = 0;
+
+    prevButton.addEventListener('click', function () {
+      if (currentIndex > 0) {
+        currentIndex--;
+        imageList.style.left = -currentIndex * imageWidth + 'px';
+      }
+    });
+
+    nextButton.addEventListener('click', function () {
+      if (currentIndex < images.length - 4) {
+        currentIndex++;
+        imageList.style.left = -currentIndex * imageWidth + 'px';
+      }
+    });
+  </script> -->
+</body>
 </html>
