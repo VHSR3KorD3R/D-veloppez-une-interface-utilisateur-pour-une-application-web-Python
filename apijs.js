@@ -78,21 +78,29 @@ const listMovies = response.results;
 
 const movieUrl = listMovies[0].url
 response = await fetch(movieUrl, options);
+response = await response.json();
 const movieDesc = response.long_description
 console.log(response);
 
 let img = document.createElement('img');
 img.src = listMovies[0].image_url;
-let div = document.getElementsByClassName("bestMovie")[0];
+img.className = "moviePoster";
+
+let div1 = document.getElementsByClassName("movieInfos")[0];
+let div2 = document.getElementsByClassName("bestMovie")[0];
+
 let h2 = document.createElement('h2');
-h2.textContent = listMovies[0].title
+h2.className = "bestMovieTitle"
+h2.textContent = listMovies[0].title;
+
 let p = document.createElement('p');
+p.className = "synopsis"
 p.textContent = movieDesc
-console.log(div);
-div.id = listMovies[0].id
-div.appendChild(h2)
-div.appendChild(p)
-div.appendChild(img)
+
+div2.appendChild(img)
+div1.id = listMovies[0].id
+div1.appendChild(h2)
+div1.appendChild(p)
 
 // let response = await fetch(bestMovies, options);
 // response = await response.json();
@@ -144,4 +152,25 @@ for (const carousel of carousels) {
       imageList.style.left = -currentIndex * imageWidth + 'px';
     }
   });
+}
+
+var modal = document.getElementById("myModal");
+
+var image = document.getElementsByClassName("moviePoster")[0];
+var modalImage = document.getElementById("modalImage");
+
+image.onclick = function() {
+  modal.style.display = "block";
+  modalImage.src = this.src;
+}
+
+var close = document.getElementsByClassName("close")[0];
+close.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }
