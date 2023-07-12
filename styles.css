@@ -1,14 +1,14 @@
 .carousel {
-    width: 1600px;
-    height: 200px;
+    width: 1456px;
+    height: 536px;
     overflow: hidden;
     position: relative;
     }
 
     .carousel ul {
     list-style: none;
-    width: 3200px;
-    height: 200px;
+    width: 2548px;
+    height: 536px;
     padding: 0;
     margin: 0;
     position: relative;
@@ -16,8 +16,8 @@
     }
 
     .carousel li {
-    width: 400px; 
-    height: 200px;
+    width: 364px; 
+    height: 536px;
     float: left;
     }
 
