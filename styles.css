@@ -69,13 +69,17 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
   }
   
   .modal-content {
     display: block;
-    margin: auto;
     max-width: 80%;
     max-height: 80%;
+    margin-top: 30px;
+    margin-left: 30px;
   }
   
   .close {
@@ -86,4 +90,15 @@
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+  }
+
+  .frame {
+    background-color: white;
+    height: 80%;
+    width: 80%;
+    display: flex;
+  }
+
+  .details {
+    margin-left: 20px;
   }

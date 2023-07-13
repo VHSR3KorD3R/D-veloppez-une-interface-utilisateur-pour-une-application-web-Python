@@ -40,8 +40,8 @@ async function retrieveMovies(url, category) {
     let li = document.createElement('li');
     let img = document.createElement('img');
     img.src = movie.image_url;
+    img.id = movie.id;
     li.append(img)
-    li.id = movie.id
     const ul = document.getElementById(category);
     ul.appendChild(li);
   }
@@ -56,7 +56,7 @@ async function retrieveMovies(url, category) {
     let img = document.createElement('img');
     img.src = listMoviesPage2[i].image_url;
     li.append(img)
-    li.id = listMoviesPage2[i].id
+    img.id = listMoviesPage2[i].id
     const ul = document.getElementById(category);
     ul.appendChild(li);
   }
@@ -154,23 +154,77 @@ for (const carousel of carousels) {
   });
 }
 
-var modal = document.getElementById("myModal");
 
-var image = document.getElementsByClassName("moviePoster")[0];
-var modalImage = document.getElementById("modalImage");
+let images = document.getElementsByTagName("img");
+for (const image of images) {
+  let modal = document.getElementById("modal");
 
-image.onclick = function() {
-  modal.style.display = "block";
-  modalImage.src = this.src;
-}
+  let modalImage = document.getElementById("modalImage");
 
-var close = document.getElementsByClassName("close")[0];
-close.onclick = function() {
-  modal.style.display = "none";
-}
+  image.onclick = async function() {
+    modal.style.display = "flex";
+    modalImage.src = this.src;
+    
+    let movie = 'http://localhost:8000/api/v1/titles/' + image.id;
+    let movieInfos = await fetch(movie, options);
+    movieInfos = await movieInfos.json();
+    console.log(movieInfos);
 
-window.onclick = function(event) {
-  if (event.target == modal) {
+    let h1 = document.createElement('h1')
+    h1.textContent = "Titre: " + movieInfos.title
+
+    let pYear = document.createElement('p')
+    pYear.textContent = "Année: " + movieInfos.year
+
+    let pDuration = document.createElement('p')
+    pDuration.textContent = "Durée: " + movieInfos.duration + "mins"
+
+    let pDescription = document.createElement('p')
+    pDescription.textContent = "Description: " + movieInfos.description
+
+    let pAvgVote = document.createElement('p')
+    pAvgVote.textContent = "Note Moyenne: " + movieInfos.imdb_score
+
+    let pDirector = document.createElement('p')
+    pDirector.textContent = "Réalistateur: " + movieInfos.directors
+
+    let pWriter = document.createElement('p')
+    pWriter.textContent = "Scénario: " + movieInfos.writers
+
+    let pActors = document.createElement('p')
+    pActors.textContent = "Acteurs: " + movieInfos.actors
+
+    let pgenres = document.createElement('p')
+    pgenres.textContent = "Genres: " + movieInfos.genres
+
+    let pCountry = document.createElement('p')
+    pCountry.textContent = "Pays: " + movieInfos.countries
+
+    let div = document.getElementsByClassName("details")[0];
+    console.log(div);
+    div.appendChild(h1)
+    div.appendChild(pYear)
+    div.appendChild(pCountry)
+    div.appendChild(pDuration)
+    div.appendChild(pgenres)
+    div.appendChild(pDescription)
+    div.appendChild(pAvgVote)
+    div.appendChild(pDirector)
+    div.appendChild(pWriter)
+    div.appendChild(pActors)
+    
+  }
+
+  let close = document.getElementsByClassName("close")[0];
+  close.onclick = function() {
     modal.style.display = "none";
+    document.getElementsByClassName("details")[0].innerHTML = ""
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+      document.getElementsByClassName("details")[0].innerHTML = ""
+    }
   }
 }
