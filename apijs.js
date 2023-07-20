@@ -39,7 +39,18 @@ async function retrieveMovies(url, category) {
   for (let movie of listMovies) {
     let li = document.createElement('li');
     let img = document.createElement('img');
-    img.src = movie.image_url;
+    isLinkWorking(movie.image_url)
+    .then((result) => {
+      if (result) {
+        img.src = movie.image_url;
+      } else {
+        img.src = 'notFound.png';
+
+      }
+    })
+  .catch((error) => {
+    console.error('An error occurred:', error);
+  });
     img.id = movie.id;
     li.append(img)
     const ul = document.getElementById(category);
@@ -59,6 +70,20 @@ async function retrieveMovies(url, category) {
     img.id = listMoviesPage2[i].id
     const ul = document.getElementById(category);
     ul.appendChild(li);
+  }
+}
+
+async function isLinkWorking(link) {
+  try {
+    const response = await fetch(link);
+
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
   }
 }
 
