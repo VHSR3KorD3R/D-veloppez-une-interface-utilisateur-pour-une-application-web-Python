@@ -1,35 +1,5 @@
 const options = {method: 'GET'};
 
-// let categories = ['http://localhost:8000/api/v1/titles/?sort_by=-imdb_score','http://localhost:8000/api/v1/titles/?country=france&sort_by=-imdb_score', 'http://localhost:8000/api/v1/titles/?genre=action&sort_by=-imdb_score', 'http://localhost:8000/api/v1/titles/?genre=sci-fi&sort_by=-imdb_score']
-
-// for (let category of categories) {
-//   let response = await fetch(category, options);
-//   response = await response.json();
-//   const list = response.results;
-
-//   for (let movie of list) {
-//     let para = document.createElement('p');
-//     para.textContent = JSON.stringify(movie);
-//     console.log("response " + JSON.stringify(movie));
-//     document.getElementsByClassName("test")[0].append(para);
-//   }
-
-//   let next = response.next;
-//   console.log(next);
-//   response = await fetch(next, options);
-//   response = await response.json();
-//   console.log(response);
-
-//   for(let i = 0; i < 2; i++){
-//     let para = document.createElement('p');
-//     para.textContent = JSON.stringify(response.results[i]);
-//     document.getElementsByClassName("test")[0].append(para);  
-//   }
-//   let para = document.createElement('p');
-//   para.textContent = "-----------------------------------------------------------------------------------------";
-//   document.getElementsByClassName("test")[0].append(para);
-// }
-
 async function retrieveMovies(url, category) {
   let response = await fetch(url, options);
   response = await response.json();
@@ -127,33 +97,6 @@ div1.id = listMovies[0].id
 div1.appendChild(h2)
 div1.appendChild(p)
 
-// let response = await fetch(bestMovies, options);
-// response = await response.json();
-// const listMovies = response.results;
-
-// for (let movie of listMovies) {
-//   let li = document.createElement('li');
-//   let img = document.createElement('img');
-//   img.src = movie.image_url;
-//   li.append(img)
-//   const ul = document.getElementById("bestMovies");
-//   ul.appendChild(li);
-// }
-
-// let next = response.next;
-// response = await fetch(next, options);
-// response = await response.json();
-// const listMoviesPage2 = response.results;
-
-// for(let i = 0; i < 2; i++){
-//   let li = document.createElement('li');
-//   let img = document.createElement('img');
-//   img.src = listMoviesPage2[i].image_url;
-//   li.append(img)
-//   const ul = document.getElementById("bestMovies");
-//   ul.appendChild(li);
-// }
-
 let carousels = document.querySelectorAll('.carousel');
 for (const carousel of carousels) {
   let prevButton = carousel.querySelector('.prev');
@@ -179,6 +122,11 @@ for (const carousel of carousels) {
   });
 }
 
+const createAndAppendElement = (tag, textContent) => {
+  const element = document.createElement(tag);
+  element.textContent = textContent;
+  return element;
+};
 
 let images = document.getElementsByTagName("img");
 for (const image of images) {
@@ -187,57 +135,33 @@ for (const image of images) {
   let modalImage = document.getElementById("modalImage");
 
   image.onclick = async function() {
-    modal.style.display = "flex";
-    modalImage.src = this.src;
+
+    try{
+      modal.style.display = "flex";
+      modalImage.src = this.src;
+      
+      let movie = 'http://localhost:8000/api/v1/titles/' + image.id;
+      let movieInfos = await fetch(movie, options);
+      movieInfos = await movieInfos.json();
     
-    let movie = 'http://localhost:8000/api/v1/titles/' + image.id;
-    let movieInfos = await fetch(movie, options);
-    movieInfos = await movieInfos.json();
-    console.log(movieInfos);
-
-    let h1 = document.createElement('h1')
-    h1.textContent = "Titre: " + movieInfos.title
-
-    let pYear = document.createElement('p')
-    pYear.textContent = "Année: " + movieInfos.year
-
-    let pDuration = document.createElement('p')
-    pDuration.textContent = "Durée: " + movieInfos.duration + "mins"
-
-    let pDescription = document.createElement('p')
-    pDescription.textContent = "Description: " + movieInfos.description
-
-    let pAvgVote = document.createElement('p')
-    pAvgVote.textContent = "Note Moyenne: " + movieInfos.imdb_score
-
-    let pDirector = document.createElement('p')
-    pDirector.textContent = "Réalistateur: " + movieInfos.directors
-
-    let pWriter = document.createElement('p')
-    pWriter.textContent = "Scénario: " + movieInfos.writers
-
-    let pActors = document.createElement('p')
-    pActors.textContent = "Acteurs: " + movieInfos.actors
-
-    let pgenres = document.createElement('p')
-    pgenres.textContent = "Genres: " + movieInfos.genres
-
-    let pCountry = document.createElement('p')
-    pCountry.textContent = "Pays: " + movieInfos.countries
-
-    let div = document.getElementsByClassName("details")[0];
-    console.log(div);
-    div.appendChild(h1)
-    div.appendChild(pYear)
-    div.appendChild(pCountry)
-    div.appendChild(pDuration)
-    div.appendChild(pgenres)
-    div.appendChild(pDescription)
-    div.appendChild(pAvgVote)
-    div.appendChild(pDirector)
-    div.appendChild(pWriter)
-    div.appendChild(pActors)
+      const detailsDiv = document.querySelector(".details");
     
+      detailsDiv.appendChild(createAndAppendElement("h1", `Titre: ${movieInfos.original_title}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Année: ${movieInfos.year}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Durée: ${movieInfos.duration}mins`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Description: ${movieInfos.description}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Note Moyenne: ${movieInfos.imdb_score}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Réalisateur: ${movieInfos.directors}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Scénario: ${movieInfos.writers}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Acteurs: ${movieInfos.actors}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Genres: ${movieInfos.genres}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Pays: ${movieInfos.countries}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Avertissement: ${movieInfos.rated}`));
+      detailsDiv.appendChild(createAndAppendElement("p", `Box-Office: ${movieInfos.worldwide_gross_income}`))
+
+      } catch (error) {
+        console.error("Error fetching movie data:", error);
+      }
   }
 
   let close = document.getElementsByClassName("close")[0];

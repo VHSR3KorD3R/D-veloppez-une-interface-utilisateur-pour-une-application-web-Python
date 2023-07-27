@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
-      <script type="module" src="apijs.js"></script>
-      <link rel="stylesheet" href="styles.css">
+    <title>JustStreamIt</title>
+    <script type="module" src="apijs.js"></script>
+    <link rel="stylesheet" href="styles.css">
   </head>
 <body>
   <h1>Meilleur film</h1>
@@ -43,35 +44,10 @@
   <div id="modal" class="modal">
     <span class="close">&times;</span>
     <div class="frame">
-      <img class="modal-content" id="modalImage" src="" alt="movie poster">
+      <img class="modal-content" id="modalImage" src="notFound.png" alt="movie poster">
       <div class="details">
       </div>
     </div>
   </div>
-
-  <!-- <script>
-    var carousel = document.querySelector('.carousel');
-    var prevButton = carousel.querySelector('.prev');
-    var nextButton = carousel.querySelector('.next');
-    var imageList = carousel.querySelector('ul');
-    var images = carousel.querySelectorAll('li');
-
-    var imageWidth = images[0].offsetWidth;
-    var currentIndex = 0;
-
-    prevButton.addEventListener('click', function () {
-      if (currentIndex > 0) {
-        currentIndex--;
-        imageList.style.left = -currentIndex * imageWidth + 'px';
-      }
-    });
-
-    nextButton.addEventListener('click', function () {
-      if (currentIndex < images.length - 4) {
-        currentIndex++;
-        imageList.style.left = -currentIndex * imageWidth + 'px';
-      }
-    });
-  </script> -->
 </body>
 </html>
